@@ -47,7 +47,7 @@ export default function ArticlesSection() {
           <a
             key={article.title}
             href="#"
-            className="card p-5 group block"
+            className="card p-5 block"
           >
             {/* Category & Date */}
             <div className="flex items-center justify-between mb-3">
@@ -58,7 +58,7 @@ export default function ArticlesSection() {
               </div>
             </div>
 
-            <h3 className="font-semibold text-text-primary text-[15px] mb-2 leading-snug group-hover:text-neon transition-colors">
+            <h3 className="font-semibold text-text-primary text-[15px] mb-2 leading-snug">
               {article.title}
             </h3>
 
@@ -70,7 +70,7 @@ export default function ArticlesSection() {
               <span className="text-text-muted text-[12px]">
                 {article.date}
               </span>
-              <span className="flex items-center gap-1 text-[12px] text-neon opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="flex items-center gap-1 text-[12px] text-neon">
                 Read More
                 <ArrowRight size={12} />
               </span>

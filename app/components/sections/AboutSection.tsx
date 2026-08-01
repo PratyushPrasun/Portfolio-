@@ -1,151 +1,203 @@
 "use client";
 
+import React from "react";
+
+const skillsList = [
+  {
+    name: "React.js",
+    icon: (
+      <svg width="20" height="20" viewBox="-11.5 -10.23 23 20.46" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <circle cx="0" cy="0" r="2" fill="currentColor" stroke="none" />
+        <g>
+          <ellipse rx="11" ry="4.2" />
+          <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+          <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+        </g>
+      </svg>
+    ),
+  },
+  {
+    name: "Next.js",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.563 17.585-6.223-8.082v8.082H9.722V6.415h1.758l6.104 7.915V6.415h1.618v11.17h-1.639z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Node.js",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1.5L2.5 7v10L12 22.5 21.5 17V7L12 1.5zm6.5 14.1L12 19.4l-6.5-3.8V8.4L12 4.6l6.5 3.8v7.2zM10.8 9.5v5h2.4v-3.2l2.3 3.2h2V9.5h-2.4v3.1l-2.3-3.1h-2z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Express.js",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2.5 6h4.8v2.4H4.9v3.6h2.4v2.4H4.9V18h4.8v2.4H2.5V6zm9.6 0l2.4 4.8L16.9 6h2.8l-3.8 7.2 4 7.2h-2.9l-2.5-4.9-2.5 4.9H9.3l4-7.2-3.8-7.2h2.6z" />
+      </svg>
+    ),
+  },
+  {
+    name: "JavaScript",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 3h18v18H3V3zm15.5 14.5c-.3-1-1.2-1.8-3.1-2.5-.7-.3-1.4-.5-1.6-1-.1-.3-.1-.5 0-.7.2-.4.7-.6 1.2-.5.4.1.7.3 1 .8l1-.7c-.3-.5-.5-.7-.8-.9-.7-.6-1.7-.8-2.6-.5-.8.3-1.4.9-1.5 1.8-.1 1.3.8 2 2.1 2.5 1.2.5 1.7.7 1.8 1.3.1.6-.3 1.2-1.2 1.2-.8 0-1.3-.4-1.7-1.1l-1 .7c.4.7.8 1.1 1.3 1.4.7.4 1.8.5 2.6.2 1-.3 1.7-1 1.7-2.1v-.9zM12 11.5h-1.5v6.5c0 1.2-.4 1.6-1.3 1.6-.4 0-.7-.1-1-.2-.1-.1-.2-.2-.3-.3l-.5.8c.4.3.8.5 1.3.6.6.1 1.3.1 1.9-.2.8-.4 1.4-1.1 1.4-2.7v-6.1z" />
+      </svg>
+    ),
+  },
+  {
+    name: "MongoDB",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1.5s-4.5 4-4.5 9.5c0 4.5 3.5 7.5 4.5 8.5.5-.5 4.5-3.5 4.5-8.5 0-5.5-4.5-9.5-4.5-9.5zm0 15.5c-1-1-3-3.2-3-6 0-3.5 2.5-6.5 3-7.2.5.7 3 3.7 3 7.2 0 2.8-2 5-3 6z" />
+      </svg>
+    ),
+  },
+  {
+    name: "C++",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22.3 10.8v1.4h-1.4v1.4h-1.4v-1.4h-1.4v-1.4h1.4V9.3h1.4v1.5h1.4zm-5.8 0v1.4h-1.4v1.4h-1.4v-1.4h-1.4v-1.4h1.4V9.3h1.4v1.5h1.4zM9.5 3.7C5.2 3.7 1.7 7.2 1.7 11.5s3.5 7.8 7.8 7.8c3.2 0 5.9-1.9 7.2-4.7h-3.2a4.9 4.9 0 0 1-4 2.1c-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9c1.6 0 3.1.8 4 2h3.2C15.5 6.3 12.7 3.7 9.5 3.7z" />
+      </svg>
+    ),
+  },
+  {
+    name: "TypeScript",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 3h18v18H3V3zm15.5 6.8h-1.6c-.6 0-1.2.1-1.6.3v2.5c.6-.4 1.3-.6 2.1-.6.7 0 1.1.2 1.1.7 0 .5-.4.8-1.2 1.1l-1.3.5c-1.3.5-1.9 1.3-1.9 2.5 0 1.7 1.3 2.7 3.3 2.7 1 0 1.9-.2 2.6-.7v-2.6c-.7.4-1.5.7-2.3.7-.8 0-1.2-.2-1.2-.7 0-.5.4-.8 1.2-1.1l1.3-.5c1.3-.5 1.9-1.3 1.9-2.5.1-1.7-1.2-2.7-3.2-2.7zM11.5 9.8H4.5v2.3h2.3v7.4h2.7v-7.4h2v-2.3z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Tailwind CSS",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C7.666 17.818 9.027 19.2 12.001 19.2c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Python",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11.9 2c-4.8 0-4.5 2.1-4.5 2.1v2.2h4.6v.7H5.2S2 6.6 2 11.5c0 4.9 2.8 4.7 2.8 4.7h1.7v-2.3c0-2.6 2.2-2.5 2.2-2.5h4.5c2.2 0 2.2-2.1 2.2-2.1V4.1s.4-2.1-3.5-2.1zm-2.4 1.5c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9zm2.6 18.5c4.8 0 4.5-2.1 4.5-2.1v-2.2h-4.6v-.7h6.8s3.2.4 3.2-4.5c0-4.9-2.8-4.7-2.8-4.7h-1.7v2.3c0 2.6-2.2 2.5-2.2 2.5h-4.5c-2.2 0-2.2 2.1-2.2 2.1v6.2s-.4 2.1 3.5 2.1zm2.4-1.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" />
+      </svg>
+    ),
+  },
+];
+
 export default function AboutSection() {
   return (
     <section id="about" className="section-animate">
-      <h2 className="text-2xl font-bold mb-6 green-first-letter">About Me</h2>
+      <h2 className="text-2xl font-bold mb-6 flex items-center text-white tracking-wide">
+        <span className="text-[#22c55e]">
+          A
+        </span>
+        <span>bout Me</span>
+      </h2>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      {/* Desktop layout: side-by-side */}
+      <div className="hidden md:flex flex-col lg:flex-row items-stretch gap-5 border-b border-border-subtle pb-8">
         {/* Intro text */}
-        <div className="flex-1">
+        <div className="flex-1 pr-0 lg:pr-5">
           <p className="text-text-secondary leading-relaxed text-[15px]">
-            Hey, there 👋 I&apos;m Benjamin, a Software developer and Data
-            scientist with over 8+ years of experience, specialising in Java and
-            React. Also I proficient at using tools and programming languages
-            such as Python or SQL to manipulate and analyze data. I love building
-            scalable web applications and crafting intuitive user experiences
-            that make a real impact.
-          </p>
-          <p className="text-text-secondary leading-relaxed text-[15px] mt-4">
-            When I&apos;m not coding, you&apos;ll find me exploring the latest
-            in machine learning, contributing to open-source projects, or
-            mentoring aspiring developers. I believe in continuous learning and
-            pushing the boundaries of what&apos;s possible with technology.
+            Hey, there 👋 I&apos;m Pratyush, a Full Stack MERN Developer and Computer Science student passionate about building scalable web applications, secure backend systems, and modern interactive user interfaces. I enjoy transforming ideas into high-quality digital products using modern technologies.
           </p>
         </div>
 
-        {/* Info cards */}
-        <div className="w-full lg:w-[280px] flex flex-col gap-3 shrink-0">
+        {/* Right Info Box */}
+        <div className="w-full lg:w-[380px] shrink-0 border-t lg:border-t-0 lg:border-l border-border-subtle pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center gap-4">
           {/* Location */}
-          <div className="card p-4 flex items-center gap-4">
-            <span className="info-tag">Location:</span>
-            <span className="text-text-primary text-sm">
-              Los Angeles, USA
+          <div className="flex items-center justify-between py-2 border-b border-border-subtle/60">
+            <span className="px-3 py-1 rounded bg-[#22c55e] text-black text-xs tracking-wide font-medium">
+              Location:
+            </span>
+            <span className="text-text-primary text-sm font-medium">
+              Haldia, West Bengal, India.
             </span>
           </div>
 
           {/* Languages */}
-          <div className="card p-4 flex items-center gap-4">
-            <span className="info-tag">Languages:</span>
-            <span className="text-text-primary text-sm">
-              English, German
+          <div className="flex items-center justify-between py-2 border-b border-border-subtle/60">
+            <span className="px-3 py-1 rounded bg-[#22c55e] text-black font-sm text-xs tracking-wide font-medium">
+              Languages:
+            </span>
+            <span className="text-text-primary text-sm font-medium">
+              English, Hindi
             </span>
           </div>
 
           {/* Skills */}
-          <div className="card p-4">
-            <span className="info-tag mb-3 block">Skills:</span>
-            <div className="grid grid-cols-5 gap-2 mt-3">
-              {/* React */}
-              <div className="skill-badge" title="React">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#61DAFB">
-                  <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.31 0-.594.058-.844.164-.576.246-.91.73-1.02 1.395-.155.95.125 2.2.808 3.627a37.27 37.27 0 0 0-.88.703c-2.677 2.2-4.193 4.55-4.193 6.38 0 1.822 1.505 4.161 4.175 6.36.28.23.57.456.864.674-.686 1.425-.97 2.676-.817 3.63.112.665.445 1.15 1.02 1.397.254.108.54.165.852.165 1.345 0 3.105-.96 4.884-2.618 1.782 1.662 3.545 2.618 4.89 2.618.31 0 .596-.057.846-.165.576-.248.91-.732 1.02-1.398.155-.952-.13-2.204-.814-3.628.288-.22.574-.443.85-.67 2.67-2.2 4.173-4.54 4.173-6.365 0-1.83-1.516-4.18-4.195-6.38a36.52 36.52 0 0 0-.862-.695c.68-1.424.963-2.674.81-3.625-.113-.664-.447-1.148-1.02-1.395a2.167 2.167 0 0 0-.85-.165z" />
-                </svg>
-              </div>
-              {/* Angular */}
-              <div className="skill-badge" title="Angular">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#DD0031">
-                  <path d="M9.931 12.645h4.138l-2.07-4.908m0-7.737L.68 3.982l1.726 14.771L12 24l9.596-5.242L23.32 3.984 11.999.001zm7.064 18.31h-2.638l-1.422-3.503H8.996l-1.422 3.504h-2.64L12 2.65z" />
-                </svg>
-              </div>
-              {/* Java */}
-              <div className="skill-badge" title="Java">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#f89820"
+          <div className="flex items-start justify-between pt-2">
+            <span className="px-3 py-1 rounded bg-[#22c55e] text-black font-medium text-xs tracking-wide mt-1">
+              Skills:
+            </span>
+
+            <div className="grid grid-cols-5 gap-2.5">
+              {skillsList.map((skill) => (
+                <div
+                  key={skill.name}
+                  title={skill.name}
+                  className="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon hover:bg-neon/20 hover:scale-110 transition-all cursor-pointer"
                 >
-                  <path d="M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.762.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218M13.116 11.475c1.158 1.333-.304 2.533-.304 2.533s2.939-1.518 1.589-3.418c-1.261-1.772-2.228-2.652 3.007-5.688 0-.001-8.216 2.051-4.292 6.573M19.33 20.504s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.75-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82M9.292 13.21s-4.362 1.036-1.544 1.412c1.189.159 3.561.123 5.77-.062 1.806-.152 3.618-.477 3.618-.477s-.637.272-1.098.587c-4.429 1.165-12.986.623-10.522-.568 2.082-1.006 3.776-.892 3.776-.892M17.116 17.584c4.503-2.34 2.421-4.589.968-4.285-.355.074-.515.138-.515.138s.132-.207.385-.297c2.875-1.011 5.086 2.981-.928 4.562 0-.001.07-.062.09-.118M14.401 0s2.494 2.494-2.365 6.33c-3.896 3.077-.889 4.832 0 6.836-2.274-2.053-3.943-3.858-2.824-5.539 1.644-2.469 6.197-3.665 5.189-7.627M9.734 23.924c4.322.277 10.959-.153 11.116-2.198 0 0-.302.775-3.572 1.391-3.688.694-8.239.613-10.937.168 0-.001.553.457 3.393.639" />
-                </svg>
-              </div>
-              {/* Python */}
-              <div className="skill-badge" title="Python">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#3776AB"
+                  {skill.icon}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile layout: stacked vertical */}
+      <div className="md:hidden space-y-6">
+        {/* Intro text */}
+        <p className="text-text-secondary leading-relaxed text-[14px]">
+          Hey, there 👋 I&apos;m Pratyush, a Full Stack MERN Developer and Computer Science student passionate about building scalable web applications, secure backend systems, and modern interactive user interfaces. I enjoy transforming ideas into high-quality digital products using modern technologies.
+        </p>
+
+        {/* Info cards */}
+        <div className="space-y-3">
+          {/* Location */}
+          <div className="card p-4 mobile-card flex items-center justify-between">
+            <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
+              Location
+            </span>
+            <span className="text-text-primary text-[13px] font-medium">
+              Haldia, West Bengal, India
+            </span>
+          </div>
+
+          {/* Languages */}
+          <div className="card p-4 mobile-card flex items-center justify-between">
+            <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
+              Languages
+            </span>
+            <span className="text-text-primary text-[13px] font-medium">
+              English, Hindi
+            </span>
+          </div>
+
+          {/* Skills */}
+          <div className="card p-4 mobile-card">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
+                Tech Stack
+              </span>
+            </div>
+            <div className="grid grid-cols-5 gap-3">
+              {skillsList.map((skill) => (
+                <div
+                  key={skill.name}
+                  title={skill.name}
+                  className="w-10 h-10 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon"
                 >
-                  <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.89.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z" />
-                </svg>
-              </div>
-              {/* Vue */}
-              <div className="skill-badge" title="Vue.js">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#4FC08D"
-                >
-                  <path d="M24,1.61H14.06L12,5.16,9.94,1.61H0L12,22.39ZM12,14.08,5.16,2.23H9.59L12,6.41l2.41-4.18h4.43Z" />
-                </svg>
-              </div>
-              {/* Node.js */}
-              <div className="skill-badge" title="Node.js">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#339933"
-                >
-                  <path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0 l8.795-5.076c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072 c-0.081-0.047-0.189-0.047-0.271,0L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.136,0.235 l2.409,1.392c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253 v10.021c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z" />
-                </svg>
-              </div>
-              {/* MongoDB */}
-              <div className="skill-badge" title="MongoDB">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#47A248"
-                >
-                  <path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218z" />
-                </svg>
-              </div>
-              {/* Swift */}
-              <div className="skill-badge" title="Swift">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#F05138"
-                >
-                  <path d="M7.508 0c-.287 0-.573 0-.86.002-.241.002-.483.003-.724.01-.132.003-.263.009-.395.015A9.154 9.154 0 004.045.207C3.56.336 3.108.528 2.69.784a4.473 4.473 0 00-.869.637 4.473 4.473 0 00-.637.869 4.218 4.218 0 00-.578 1.357 9.152 9.152 0 00-.18 1.484c-.006.132-.012.263-.015.395a48.77 48.77 0 00-.01.724C.002 6.537 0 6.833 0 7.12v9.762c0 .287 0 .582.002.869.002.242.003.483.01.724.003.132.009.264.015.396a9.15 9.15 0 00.18 1.483c.129.486.322.938.578 1.357.248.42.556.787.869 1.1.313.313.68.621 1.1.869.42.256.871.45 1.357.578.486.129.99.186 1.483.21.132.006.264.012.396.015.241.007.483.008.724.01.287.002.573.002.86.002h9.762c.287 0 .582 0 .869-.002.241-.002.483-.003.724-.01.132-.003.263-.009.395-.015a9.154 9.154 0 001.484-.18c.486-.129.938-.322 1.357-.578.42-.248.787-.556 1.1-.869.313-.313.621-.68.869-1.1.256-.42.45-.871.578-1.357.129-.486.186-.99.21-1.483.006-.132.012-.264.015-.396.007-.241.008-.483.01-.724.002-.287.002-.582.002-.869V7.12c0-.287 0-.583-.002-.86a48.75 48.75 0 00-.01-.724c-.003-.132-.009-.263-.015-.395a9.154 9.154 0 00-.18-1.484 4.218 4.218 0 00-.578-1.357 4.473 4.473 0 00-.869-.869A4.218 4.218 0 0019.955.207a9.154 9.154 0 00-1.484-.18c-.132-.006-.263-.012-.395-.015a48.625 48.625 0 00-.724-.01C17.065 0 16.769 0 16.482 0H7.508zM19.22 14.109c-.085.16-.228.252-.395.32-.422.171-.848.26-1.29.3a8.803 8.803 0 01-1.792-.039 8.955 8.955 0 01-2.032-.481c-.158-.06-.305-.144-.486-.23l.057.057a19.777 19.777 0 004.396 3.233c-1.47 1.127-3.183 1.702-5.072 1.792-1.905.09-3.667-.368-5.293-1.324a13.28 13.28 0 01-2.576-1.984c-.1-.098-.191-.205-.318-.344.041.026.058.035.073.047a16.352 16.352 0 003.503 2.05c1.264.554 2.584.849 3.958.867-2.475-1.404-4.48-3.312-5.992-5.724a20.91 20.91 0 01-1.446-2.842c-.092-.22-.168-.448-.277-.744l.042.054c1.371 1.755 3.012 3.2 4.942 4.323a17.26 17.26 0 004.76 2.027 5.442 5.442 0 01-1.158-.957c-1.057-1.07-1.893-2.303-2.547-3.66A14.91 14.91 0 019.95 8.25c-.072-.291-.13-.588-.2-.907a14.065 14.065 0 004.508 4.746 14.517 14.517 0 001.534.896c-.242-.634-.516-1.221-.854-1.779a14.513 14.513 0 00-3.447-3.93c-.142-.121-.29-.236-.46-.373 1.721.667 3.223 1.641 4.505 2.923 1.025 1.025 1.843 2.192 2.477 3.487.082-.042.174-.08.259-.126 1.313-.72 2.104-1.794 2.368-3.282.016-.086.034-.17.064-.322.163.53.267 1.043.305 1.567a6.246 6.246 0 01-.55 3.162.655.655 0 01-.023.042c-.027.049-.054.099-.075.153-.046.12-.041.247-.069.37-.027.125-.09.239-.142.354z" />
-                </svg>
-              </div>
-              {/* Go */}
-              <div className="skill-badge" title="Go">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#00ADD8"
-                >
-                  <path d="M1.811 10.231c-.047 0-.058-.023-.035-.059l.246-.315c.023-.035.081-.058.128-.058h4.172c.046 0 .058.035.035.07l-.199.303c-.023.036-.082.07-.117.07zM.047 11.306c-.047 0-.059-.023-.035-.058l.245-.316c.023-.035.082-.058.129-.058h5.328c.047 0 .07.035.058.07l-.093.28c-.012.047-.058.07-.105.07zm2.828 1.075c-.047 0-.059-.035-.035-.07l.163-.292c.023-.035.07-.07.117-.07h2.337c.047 0 .07.035.07.082l-.023.28c0 .047-.047.082-.082.082zm12.129-2.36c-.736.187-1.239.327-1.963.514-.176.046-.187.058-.34-.117-.174-.199-.303-.327-.548-.444-.737-.362-1.45-.257-2.115.175-.793.514-1.204 1.274-1.192 2.22.011.935.654 1.706 1.577 1.835.795.105 1.46-.175 1.987-.77.105-.13.198-.27.315-.434H10.47c-.245 0-.304-.152-.222-.35.152-.362.432-.97.596-1.274a.315.315 0 01.292-.187h4.253c-.023.316-.023.631-.07.947a4.983 4.983 0 01-.958 2.29c-.841 1.11-1.94 1.8-3.33 1.986-1.145.152-2.209-.07-3.143-.77-.865-.655-1.356-1.52-1.484-2.595-.152-1.274.222-2.419.993-3.424.83-1.086 1.928-1.776 3.272-2.02 1.098-.2 2.15-.06 3.096.572.62.41 1.063.97 1.356 1.648.07.105.023.164-.117.2z" />
-                </svg>
-              </div>
-              {/* TypeScript */}
-              <div className="skill-badge" title="TypeScript">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="#3178C6"
-                >
-                  <path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z" />
-                </svg>
-              </div>
+                  {skill.icon}
+                </div>
+              ))}
             </div>
           </div>
         </div>

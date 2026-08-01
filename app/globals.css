@@ -20,18 +20,31 @@
   --font-sans: var(--font-inter);
 }
 
+/* ── Light Theme ── */
+html.light {
+  --bg-dark: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f0;
+  --bg-surface: #fafafa;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-card: rgba(0, 0, 0, 0.1);
+  --text-primary: #1a1a1a;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+}
+
 @theme inline {
   --color-neon: #22c55e;
   --color-neon-dim: #16a34a;
-  --color-bg-dark: #0d0d0d;
-  --color-bg-card: #1a1a1a;
-  --color-bg-card-hover: #222222;
-  --color-bg-surface: #141414;
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-card: rgba(255, 255, 255, 0.1);
-  --color-text-primary: #f1f1f1;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
+  --color-bg-dark: var(--bg-dark);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-hover: var(--bg-card-hover);
+  --color-bg-surface: var(--bg-surface);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-card: var(--border-card);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --font-sans: var(--font-inter);
 }
 
@@ -84,8 +97,15 @@ body {
 
 /* ── Animations ── */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeInUp {
@@ -93,6 +113,7 @@ body {
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -100,9 +121,12 @@ body {
 }
 
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(34, 197, 94, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(34, 197, 94, 0.25), 0 8px 32px rgba(0, 0, 0, 0.5);
   }
@@ -113,6 +137,7 @@ body {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -158,23 +183,9 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 1rem;
-  transition: all 0.3s ease;
 }
 
-.card:hover {
-  background: var(--bg-card-hover);
-  border-color: rgba(34, 197, 94, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
 
-/* Profile card glow */
-.profile-card-glow {
-  box-shadow:
-    0 0 40px rgba(34, 197, 94, 0.08),
-    0 16px 48px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
 
 /* ── Scrollbar ── */
 .custom-scrollbar::-webkit-scrollbar {
@@ -194,35 +205,78 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* ── Sidebar Inner Container ── */
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 74px;
+  height: calc(100% - 24px);
+  margin: 12px auto;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 37px;
+  background: var(--bg-card);
+  padding: 16px 0;
+  overflow: hidden;
+}
+
+/* Decorative lines replacing hamburger */
+.sidebar-line {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--text-muted);
+}
+
 /* ── Nav Item ── */
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 12px 8px;
+  gap: 5px;
+  padding: 10px 8px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.25s ease;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  transition: color 0.25s ease;
+}
+
+/* Icon wrapper — fixed dimensions to prevent layout shift on scale */
+.nav-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.25s ease;
+}
+
+.nav-item:hover .nav-icon-wrapper {
+  transform: scale(1.2);
 }
 
 .nav-item:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--neon-green);
+  ;
 }
 
+/* Active state — only the icon stroke is green */
 .nav-item.active {
+  color: var(--text-primary);
+}
+
+.nav-item.active .nav-icon-wrapper {
   color: var(--neon-green);
-  background: rgba(34, 197, 94, 0.08);
 }
 
 .nav-item.active svg {
-  filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.4));
+  filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.3));
 }
 
 /* ── Skill Badge ── */
@@ -235,14 +289,7 @@ body {
   border-radius: 10px;
   background: rgba(34, 197, 94, 0.08);
   border: 1px solid rgba(34, 197, 94, 0.15);
-  transition: all 0.3s ease;
   font-size: 18px;
-}
-
-.skill-badge:hover {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: rgba(34, 197, 94, 0.3);
-  transform: scale(1.1);
 }
 
 /* ── Buttons ── */
@@ -324,7 +371,6 @@ body {
 .info-tag {
   display: inline-block;
   padding: 4px 12px;
-  background: rgba(34, 197, 94, 0.12);
   color: var(--neon-green);
   font-size: 12px;
   font-weight: 600;
@@ -393,6 +439,232 @@ body {
   transform: translateY(-2px);
 }
 
+/* ── Social Icon Minimal (no background box) ── */
+.social-icon-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: color 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+}
+
+.social-icon-minimal:hover {
+  color: var(--neon-green);
+  transform: translateY(-2px);
+}
+
+
+/* ── Glitch Text Effect ── */
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+
+  2% {
+    transform: skew(2deg);
+  }
+
+  4% {
+    transform: skew(-1deg);
+  }
+
+  6% {
+    transform: skew(0deg);
+  }
+
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes glitch-shift-1 {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  2% {
+    clip-path: inset(20% 0 40% 0);
+    transform: translate(-3px, 0);
+  }
+
+  4% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(3px, 0);
+  }
+
+  6% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(-2px, 0);
+  }
+
+  8% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-shift-2 {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  3% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(3px, 0);
+  }
+
+  5% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(-3px, 0);
+  }
+
+  7% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(2px, 0);
+  }
+
+  9% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch-skew 6s infinite linear;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  color: #0ff;
+  animation: glitch-shift-1 6s infinite linear;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.glitch-text::after {
+  color: #f0f;
+  animation: glitch-shift-2 6s infinite linear;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+/* ── Glitch Image Effect ── */
+@keyframes glitch-img-1 {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  2% {
+    clip-path: inset(15% 0 55% 0);
+    transform: translate(-4px, 0);
+  }
+
+  4% {
+    clip-path: inset(45% 0 25% 0);
+    transform: translate(4px, 0);
+  }
+
+  5% {
+    clip-path: inset(75% 0 5% 0);
+    transform: translate(-2px, 0);
+  }
+
+  6% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-img-2 {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  3% {
+    clip-path: inset(35% 0 35% 0);
+    transform: translate(5px, 0);
+  }
+
+  5% {
+    clip-path: inset(65% 0 10% 0);
+    transform: translate(-3px, 0);
+  }
+
+  7% {
+    clip-path: inset(5% 0 70% 0);
+    transform: translate(3px, 0);
+  }
+
+  8% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: translate(0);
+  }
+}
+
+.glitch-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.glitch-image::before,
+.glitch-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glitch-image::before {
+  background: rgba(0, 255, 255, 0.04);
+  mix-blend-mode: screen;
+  animation: glitch-img-1 5s infinite linear;
+}
+
+.glitch-image::after {
+  background: rgba(255, 0, 255, 0.04);
+  mix-blend-mode: screen;
+  animation: glitch-img-2 5s infinite linear;
+}
+
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   :root {
@@ -405,4 +677,110 @@ body {
     --sidebar-width: 0px;
     --profile-card-width: 100%;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE-SPECIFIC STYLES (<768px)
+   ══════════════════════════════════════════════════════ */
+
+/* ── Mobile Navbar ── */
+.mobile-navbar-scrolled {
+  background: rgba(13, 13, 13, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+html.light .mobile-navbar-scrolled {
+  background: rgba(245, 245, 245, 0.85);
+}
+
+/* ── Mobile Drawer ── */
+.mobile-drawer {
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border-left: 1px solid var(--border-subtle);
+}
+
+html.light .mobile-drawer {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* ── Mobile Card ── */
+.mobile-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: none;
+}
+
+/* ── Mobile Form Input (larger touch targets) ── */
+.mobile-input {
+  min-height: 48px;
+  font-size: 16px; /* Prevents iOS zoom on focus */
+  border-radius: 12px;
+}
+
+/* ── Disable hover effects on touch devices ── */
+@media (hover: none) and (pointer: coarse) {
+  .nav-item:hover .nav-icon-wrapper {
+    transform: none;
+  }
+
+  .nav-item:hover {
+    color: var(--text-muted);
+  }
+
+  .social-icon:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    transform: none;
+  }
+
+  .social-icon-minimal:hover {
+    color: var(--text-secondary);
+    transform: none;
+  }
+
+  .btn-primary:hover {
+    background: var(--neon-green);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--border-card);
+    color: var(--text-primary);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .mobile-card {
+    transform: none !important;
+  }
+}
+
+/* ── Light theme adjustments for glitch effects ── */
+html.light .glitch-text::before {
+  opacity: 0.3;
+}
+
+html.light .glitch-text::after {
+  opacity: 0.3;
+}
+
+html.light .glitch-image::before {
+  opacity: 0.5;
+}
+
+html.light .glitch-image::after {
+  opacity: 0.5;
+}
+
+/* ── Light theme scrollbar ── */
+html.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+html.light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
 }

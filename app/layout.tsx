@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ThemeProvider from "./components/ThemeProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -8,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Benjamin Ryan | Software Developer",
+  title: "Pratyush | Full Stack Developer",
   description:
-    "Portfolio of Benjamin Ryan — Software Developer & Data Scientist with 8+ years of experience specializing in Java, React, and Python.",
+    "Portfolio of Pratyush — Full Stack MERN Developer & Computer Science student specializing in React, Next.js, Node.js, and modern web technologies.",
 };
 
 export default function RootLayout({
@@ -19,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} dark`}>
-      <body className="h-full overflow-hidden font-sans">{children}</body>
+    <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
+      <body className="h-full overflow-hidden font-sans">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
