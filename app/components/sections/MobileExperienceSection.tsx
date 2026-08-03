@@ -29,7 +29,7 @@ const experience = [
 export default function MobileExperienceSection() {
   return (
     <section id="experience-mobile" className="section-animate md:hidden">
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-white tracking-wide">
+      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide">
         <span className="text-[#22c55e]">E</span>
         <span>xperience</span>
       </h2>

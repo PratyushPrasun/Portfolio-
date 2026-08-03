@@ -7,7 +7,9 @@ import {
   Code2,
   Mail,
   Sun,
+  Moon,
 } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 interface SidebarProps {
   activeSection: string;
@@ -28,6 +30,8 @@ export default function Sidebar({
   activeSection,
   onNavigate,
 }: SidebarProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <>
       {/* Sidebar rail — desktop only */}
@@ -64,13 +68,23 @@ export default function Sidebar({
             })}
           </nav>
 
-          {/* Settings/Sun icon at bottom */}
+          {/* Settings/Theme Toggle icon at bottom */}
           <div className="mt-auto mb-2">
-            <div className="nav-item">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="nav-item"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
               <span className="nav-icon-wrapper">
-                <Sun size={20} strokeWidth={1.5} />
+                {theme === "dark" ? (
+                  <Sun size={20} strokeWidth={1.5} />
+                ) : (
+                  <Moon size={20} strokeWidth={1.5} />
+                )}
               </span>
-            </div>
+            </button>
           </div>
         </div>
       </aside>
