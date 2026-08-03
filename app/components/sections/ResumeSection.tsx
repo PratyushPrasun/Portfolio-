@@ -50,7 +50,7 @@ export default function ResumeSection() {
       <h2 className="text-2xl font-bold mb-6 green-first-letter hidden md:block">Resume</h2>
 
       {/* Mobile: "Education" heading showing only Education */}
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-white tracking-wide md:hidden">
+      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide md:hidden">
         <span className="text-[#22c55e]">E</span>
         <span>ducation</span>
       </h2>

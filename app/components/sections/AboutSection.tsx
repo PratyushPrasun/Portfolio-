@@ -93,7 +93,7 @@ const skillsList = [
 export default function AboutSection() {
   return (
     <section id="about" className="section-animate">
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-white tracking-wide">
+      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide">
         <span className="text-[#22c55e]">
           A
         </span>

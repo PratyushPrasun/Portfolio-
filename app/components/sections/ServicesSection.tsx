@@ -41,7 +41,7 @@ const services = [
 export default function ServicesSection() {
   return (
     <section id="services" className="section-animate">
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-white tracking-wide">
+      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide">
         <span className=" text-[#22c55e]">
           M
         </span>
