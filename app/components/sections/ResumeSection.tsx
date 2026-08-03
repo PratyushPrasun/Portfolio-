@@ -4,50 +4,43 @@ import { GraduationCap, Building2 } from "lucide-react";
 
 const education = [
   {
-    degree: "Master of Computer Science",
-    institution: "Stanford University",
-    period: "2014 — 2016",
+    degree: "Bachelor of Technology in Computer Science",
+    institution: "Haldia Institute of Technology",
+    period: "2024 — 2028 (Pursuing)",
     description:
-      "Specialized in Machine Learning and Distributed Systems. Published research on scalable data processing pipelines.",
+      "Focusing on Full-Stack Development, Data Structures, and Artificial Intelligence. Maintaining a strong academic record while participating in tech communities.",
   },
   {
-    degree: "Bachelor of Computer Science",
-    institution: "University of California, LA",
-    period: "2010 — 2014",
+    degree: "Higher Secondary (12th Grade)",
+    institution: "Annie Besant International School",
+    period: "2021 — 2023",
     description:
-      "Dean's List honors. Focused on software engineering fundamentals, algorithms, and data structures.",
+      "Specialized in Physics, Chemistry, and Mathematics (PCM). Developed a strong foundation in analytical thinking and problem-solving.",
   },
   {
-    degree: "Data Science Certification",
-    institution: "MIT Professional Education",
-    period: "2017",
+    degree: "Secondary School (10th Grade)",
+    institution: "Destiny International School",
+    period: "2019 – 2021",
     description:
-      "Advanced certification in statistical modeling, deep learning, and big data analytics.",
+      "Completed general secondary education with a focus on science and mathematics.",
   },
 ];
 
 const experience = [
   {
-    role: "Senior Software Developer",
-    company: "Google",
-    period: "2021 — Present",
+    role: "Freelancer Web Developer",
+    company: "GS3 Solution LLC",
+    period: "May 2025 – June 2025",
     description:
-      "Leading a team of 8 engineers building cloud-native microservices. Reduced API latency by 40% through architecture optimization.",
+      "Developed responsive and user-friendly web interfaces. Worked directly with clients to deliver feature-based solutions. Enhanced UI performance and design consistency.",
   },
   {
-    role: "Full Stack Developer",
-    company: "Meta",
-    period: "2018 — 2021",
+    role: "Web & Tech Team Member",
+    company: "The HIT Times (College Club)",
+    period: "Nov 2024 – Present",
     description:
-      "Built and maintained React-based frontends serving 50M+ users. Implemented real-time data visualization dashboards.",
-  },
-  {
-    role: "Software Engineer",
-    company: "Amazon",
-    period: "2016 — 2018",
-    description:
-      "Developed high-throughput order processing systems handling 10K+ transactions per second using Java and AWS services.",
-  },
+      "Building and maintaining the club’s web presence. Collaborating with writers and designers. Implementing modern UI components and layouts.",
+  }
 ];
 
 export default function ResumeSection() {
