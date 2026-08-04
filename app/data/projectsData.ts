@@ -33,7 +33,7 @@ export const projects: Project[] = [
   {
     id: "Vyuha ",
     title: "Vyuha ",
-    image: "./vuha.png",
+    image: "./vyuha.png",
     mockupGradient: "linear-gradient(135deg, #1a0533, #2d1b69, #4a1a8a)",
     techStack: [
       "Next.js",
@@ -43,9 +43,10 @@ export const projects: Project[] = [
       "Gemini API",
     ],
     keyFeatures: [
-      "Personalized product recommendations using collaborative filtering",
-      "Dynamic pricing engine with demand-based adjustments",
-      "Predictive inventory management reducing stockouts by 40%",
+      "AI-powered idea-to-execution platform built with Next.js.",
+"Interactive workflows for idea expansion and flowchart visualization.",
+"GitHub project initialization with a modern, responsive interface."
+
     ],
     github: "https://github.com/PratyushPrasun/Vyuha-web",
     liveDemo: "https://nitr-vyuha.vercel.app/",
@@ -76,12 +77,9 @@ export const projects: Project[] = [
     image: "/airesume.png",
     mockupGradient: "linear-gradient(135deg, #0a1628, #1a2744, #0d3b66)",
     techStack: [
-      "Java",
-      "Spring Boot",
-      "MongoDB",
-      "GraphQL",
-      "Kafka",
-      "Redis",
+      "React.js",
+      "Express.js",
+      "Mongo DB",
     ],
     keyFeatures: [
       "AI-powered resume analyzer with ATS scoring and personalized feedback.",
@@ -90,5 +88,45 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/PratyushPrasun/Ai-ResumePro",
     liveDemo: "https://ai-resume-pro-inky.vercel.app/",
+  },
+  {
+    id: "Pitch hub",
+    title: "Pitch Hub",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+    mockupGradient: "linear-gradient(135deg, #0a1628, #1a2744, #0d3b66)",
+    techStack: [
+      "Next.js",
+      "Typescript",
+      "Auth.js",
+      "Tailwind CSS",
+    ],
+    keyFeatures: [
+      "Full-stack startup blogging platform for publishing and discovering business ideas.",
+      "Secure authentication for creators and readers.",
+      "Built with Next.js & Tailwind CSS for a fast, modern web experience.",
+    ],
+    github: "https://github.com/PratyushPrasun/Yc_directory",
+    liveDemo: "https://yc-directory-omega-sable.vercel.app/",
+  },
+  {
+    id: "Redefine",
+    title: "ReDefine",
+    image: "/red.png",
+    mockupGradient: "linear-gradient(135deg, #0a1628, #1a2744, #0d3b66)",
+    techStack: [
+      "Java",
+      "Spring Boot",
+      "MongoDB",
+      "GraphQL",
+      "Kafka",
+      "Redis",
+    ],
+    keyFeatures: [
+      "Animation-driven web experience powered by GSAP and modern motion design.",
+"Scroll-triggered interactions with immersive micro-animations.",
+"Performance-optimized UI delivering smooth, fluid user experiences."
+    ],
+    github: "https://github.com/PratyushPrasun/ReDefine",
+    liveDemo: "https://re-define-phi.vercel.app/",
   },
 ];

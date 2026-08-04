@@ -6,6 +6,12 @@ import {
   FolderKanban,
   Lightbulb,
 } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  accentLineVariants,
+} from "../../animations/variants";
 
 const services = [
   {
@@ -40,20 +46,38 @@ const services = [
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="section-animate">
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide">
-        <span className=" text-[#22c55e]">
-          M
-        </span>
-        <span>y Services</span>
-      </h2>
+    <motion.section
+      id="services"
+      variants={staggerContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className="section-animate in-view"
+    >
+      <div className="relative mb-6 inline-block">
+        <motion.h2 variants={fadeUpVariants} className="text-2xl font-bold flex items-center text-text-primary tracking-wide">
+          <span className="text-[#22c55e]">
+            M
+          </span>
+          <span>y Services</span>
+        </motion.h2>
+        <motion.div
+          variants={accentLineVariants}
+          className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+        />
+      </div>
 
       {/* Desktop: 2-column grid */}
-      <div className="hidden md:grid grid-cols-2 gap-4">
+      <motion.div variants={staggerContainerVariants} className="hidden md:grid grid-cols-2 gap-4">
         {services.map((service) => {
           const Icon = service.icon;
           return (
-            <div key={service.title} className="card p-5">
+            <motion.div
+              key={service.title}
+              variants={fadeUpVariants}
+              whileHover={{ y: -3, transition: { duration: 0.2, ease: "easeOut" } }}
+              className="card p-5 transition-colors hover:border-neon/30"
+            >
               <div className="flex items-start gap-4">
                 <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 shrink-0">
                   <Icon size={22} className="text-neon" />
@@ -63,24 +87,27 @@ export default function ServicesSection() {
                     <h3 className="font-semibold text-text-primary text-[15px]">
                       {service.title}
                     </h3>
-                    
                   </div>
                   <p className="text-text-muted text-[13px] leading-relaxed">
                     {service.description}
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* Mobile: Full-width stacked cards */}
-      <div className="md:hidden space-y-3">
+      <motion.div variants={staggerContainerVariants} className="md:hidden space-y-3">
         {services.map((service) => {
           const Icon = service.icon;
           return (
-            <div key={service.title} className="card p-5 mobile-card">
+            <motion.div
+              key={service.title}
+              variants={fadeUpVariants}
+              className="card p-5 mobile-card"
+            >
               <div className="flex items-start gap-4">
                 <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 shrink-0">
                   <Icon size={22} className="text-neon" />
@@ -94,10 +121,10 @@ export default function ServicesSection() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

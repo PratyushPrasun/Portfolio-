@@ -1,6 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  accentLineVariants,
+  chipContainerVariants,
+  chipItemVariants,
+} from "../../animations/variants";
 
 const skillsList = [
   {
@@ -92,25 +100,38 @@ const skillsList = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="section-animate">
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide">
-        <span className="text-[#22c55e]">
-          A
-        </span>
-        <span>bout Me</span>
-      </h2>
+    <motion.section
+      id="about"
+      variants={staggerContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className="section-animate in-view"
+    >
+      <div className="relative mb-6 inline-block">
+        <motion.h2 variants={fadeUpVariants} className="text-2xl font-bold flex items-center text-text-primary tracking-wide">
+          <span className="text-[#22c55e]">
+            A
+          </span>
+          <span>bout Me</span>
+        </motion.h2>
+        <motion.div
+          variants={accentLineVariants}
+          className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+        />
+      </div>
 
       {/* Desktop layout: side-by-side */}
-      <div className="hidden md:flex flex-col lg:flex-row items-stretch gap-5 border-b border-border-subtle pb-8">
+      <div className="hidden lg:flex flex-col lg:flex-row items-stretch gap-5 border-b border-border-subtle pb-8">
         {/* Intro text */}
-        <div className="flex-1 pr-0 lg:pr-5">
+        <motion.div variants={fadeUpVariants} className="flex-1 pr-0 lg:pr-5">
           <p className="text-text-secondary leading-relaxed text-[15px]">
             Hey, there 👋 I&apos;m Pratyush, a Full Stack MERN Developer and Computer Science student passionate about building scalable web applications, secure backend systems, and modern interactive user interfaces. I enjoy transforming ideas into high-quality digital products using modern technologies.
           </p>
-        </div>
+        </motion.div>
 
         {/* Right Info Box */}
-        <div className="w-full lg:w-[380px] shrink-0 border-t lg:border-t-0 lg:border-l border-border-subtle pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center gap-4">
+        <motion.div variants={fadeUpVariants} className="w-full lg:w-[380px] shrink-0 border-t lg:border-t-0 lg:border-l border-border-subtle pt-6 lg:pt-0 lg:pl-6 flex flex-col justify-center gap-4">
           {/* Location */}
           <div className="flex items-center justify-between py-2 border-b border-border-subtle/60">
             <span className="px-3 py-1 rounded bg-[#22c55e] text-black text-xs tracking-wide font-medium">
@@ -137,71 +158,74 @@ export default function AboutSection() {
               Skills:
             </span>
 
-            <div className="grid grid-cols-5 gap-2.5">
+            <motion.div variants={chipContainerVariants} className="grid grid-cols-5 gap-2.5">
               {skillsList.map((skill) => (
-                <div
+                <motion.div
                   key={skill.name}
+                  variants={chipItemVariants}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.15 } }}
                   title={skill.name}
-                  className="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon hover:bg-neon/20 hover:scale-110 transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon transition-colors hover:bg-neon/20 cursor-default"
                 >
                   {skill.icon}
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Mobile layout: stacked vertical */}
-      <div className="md:hidden space-y-6">
+      <motion.div variants={staggerContainerVariants} className="lg:hidden space-y-6">
         {/* Intro text */}
-        <p className="text-text-secondary leading-relaxed text-[14px]">
+        <motion.p variants={fadeUpVariants} className="text-text-secondary leading-relaxed text-[14px]">
           Hey, there 👋 I&apos;m Pratyush, a Full Stack MERN Developer and Computer Science student passionate about building scalable web applications, secure backend systems, and modern interactive user interfaces. I enjoy transforming ideas into high-quality digital products using modern technologies.
-        </p>
+        </motion.p>
 
         {/* Info cards */}
         <div className="space-y-3">
           {/* Location */}
-          <div className="card p-4 mobile-card flex items-center justify-between">
+          <motion.div variants={fadeUpVariants} className="card p-4 mobile-card flex items-center justify-between">
             <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
               Location
             </span>
             <span className="text-text-primary text-[13px] font-medium">
               Haldia, West Bengal, India
             </span>
-          </div>
+          </motion.div>
 
           {/* Languages */}
-          <div className="card p-4 mobile-card flex items-center justify-between">
+          <motion.div variants={fadeUpVariants} className="card p-4 mobile-card flex items-center justify-between">
             <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
               Languages
             </span>
             <span className="text-text-primary text-[13px] font-medium">
               English, Hindi
             </span>
-          </div>
+          </motion.div>
 
           {/* Skills */}
-          <div className="card p-4 mobile-card">
+          <motion.div variants={fadeUpVariants} className="card p-4 mobile-card">
             <div className="flex items-center gap-3 mb-4">
               <span className="px-3 py-1 rounded bg-neon text-black text-[11px] tracking-wide font-semibold">
                 Tech Stack
               </span>
             </div>
-            <div className="grid grid-cols-5 gap-3">
+            <motion.div variants={chipContainerVariants} className="grid grid-cols-5 gap-3">
               {skillsList.map((skill) => (
-                <div
+                <motion.div
                   key={skill.name}
+                  variants={chipItemVariants}
                   title={skill.name}
                   className="w-10 h-10 rounded-full bg-neon/10 border border-neon/20 flex items-center justify-center text-neon"
                 >
                   {skill.icon}
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

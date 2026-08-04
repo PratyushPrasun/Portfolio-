@@ -9,6 +9,7 @@ import {
   Sun,
   Moon,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 
 interface SidebarProps {
@@ -36,7 +37,7 @@ export default function Sidebar({
     <>
       {/* Sidebar rail — desktop only */}
       <aside
-        className="hidden md:flex fixed top-0 left-0 h-full z-50 w-[90px] flex-col items-center bg-bg-dark py-6 md:relative md:z-auto"
+        className="hidden lg:flex fixed top-0 left-0 h-full z-50 w-[90px] flex-col items-center bg-bg-dark py-6 lg:relative lg:z-auto"
       >
         {/* Inner container with green border */}
         <div className="sidebar-inner">
@@ -56,13 +57,26 @@ export default function Sidebar({
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className={`nav-item ${isActive ? "active" : ""}`}
+                  className={`nav-item relative ${isActive ? "active" : ""}`}
                   aria-label={`Navigate to ${item.label}`}
                 >
-                  <span className="nav-icon-wrapper">
+                  <motion.span
+                    whileHover={{ scale: 1.15, y: -1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="nav-icon-wrapper"
+                  >
                     <Icon size={20} strokeWidth={1.5} />
-                  </span>
+                  </motion.span>
                   <span>{item.label}</span>
+
+                  {/* Gliding active underline / pill indicator */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeNavIndicator"
+                      className="absolute inset-0 rounded-xl bg-neon/10 border border-neon/30 -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </button>
               );
             })}
@@ -77,13 +91,17 @@ export default function Sidebar({
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
-              <span className="nav-icon-wrapper">
+              <motion.span
+                whileHover={{ scale: 1.15, rotate: 15 }}
+                whileTap={{ scale: 0.95 }}
+                className="nav-icon-wrapper"
+              >
                 {theme === "dark" ? (
                   <Sun size={20} strokeWidth={1.5} />
                 ) : (
                   <Moon size={20} strokeWidth={1.5} />
                 )}
-              </span>
+              </motion.span>
             </button>
           </div>
         </div>
@@ -91,3 +109,4 @@ export default function Sidebar({
     </>
   );
 }
+
