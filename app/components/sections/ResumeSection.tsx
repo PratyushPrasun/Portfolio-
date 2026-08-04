@@ -1,6 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import { GraduationCap, Building2 } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  accentLineVariants,
+  sequentialContainer,
+  sequentialItem,
+} from "../../animations/variants";
+import { experienceData as experience } from "../../data/experienceData";
 
 const education = [
   {
@@ -26,39 +36,46 @@ const education = [
   },
 ];
 
-const experience = [
-  {
-    role: "Freelancer Web Developer",
-    company: "GS3 Solution LLC",
-    period: "May 2025 – June 2025",
-    description:
-      "Developed responsive and user-friendly web interfaces. Worked directly with clients to deliver feature-based solutions. Enhanced UI performance and design consistency.",
-  },
-  {
-    role: "Web & Tech Team Member",
-    company: "The HIT Times (College Club)",
-    period: "Nov 2024 – Present",
-    description:
-      "Building and maintaining the club’s web presence. Collaborating with writers and designers. Implementing modern UI components and layouts.",
-  }
-];
-
 export default function ResumeSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
-    <section id="resume" className="section-animate">
+    <motion.section
+      id="resume"
+      ref={containerRef}
+      variants={staggerContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className="section-animate in-view"
+    >
       {/* Desktop: "Resume" heading showing both Education + Experience */}
-      <h2 className="text-2xl font-bold mb-6 green-first-letter hidden md:block">Resume</h2>
+      <div className="hidden md:inline-block relative mb-6">
+        <motion.h2 variants={fadeUpVariants} className="text-2xl font-bold green-first-letter">
+          Resume
+        </motion.h2>
+        <motion.div
+          variants={accentLineVariants}
+          className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+        />
+      </div>
 
       {/* Mobile: "Education" heading showing only Education */}
-      <h2 className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide md:hidden">
-        <span className="text-[#22c55e]">E</span>
-        <span>ducation</span>
-      </h2>
+      <div className="md:hidden relative mb-6 inline-block">
+        <motion.h2 variants={fadeUpVariants} className="text-2xl font-bold flex items-center text-text-primary tracking-wide">
+          <span className="text-[#22c55e]">E</span>
+          <span>ducation</span>
+        </motion.h2>
+        <motion.div
+          variants={accentLineVariants}
+          className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+        />
+      </div>
 
       {/* Desktop: Two-column grid with Education + Experience */}
       <div className="hidden md:grid grid-cols-2 gap-6">
         {/* Education */}
-        <div className="card p-6">
+        <motion.div variants={fadeUpVariants} className="card p-6 relative overflow-hidden">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-neon/10 border border-neon/20">
               <GraduationCap size={20} className="text-neon" />
@@ -68,10 +85,17 @@ export default function ResumeSection() {
             </h3>
           </div>
 
-          <div className="space-y-0">
+          <motion.div variants={sequentialContainer} className="space-y-0 relative">
             {education.map((item, index) => (
-              <div key={index} className="timeline-item">
-                <span className="text-[11px] text-neon font-medium uppercase tracking-wider">
+              <motion.div
+                key={index}
+                variants={sequentialItem}
+                className="timeline-item"
+              >
+                <span className="text-[11px] text-neon font-medium uppercase tracking-wider flex items-center gap-1.5">
+                  {index === 0 && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-neon animate-pulse inline-block" />
+                  )}
                   {item.period}
                 </span>
                 <h4 className="font-semibold text-text-primary text-[14px] mt-1">
@@ -83,13 +107,13 @@ export default function ResumeSection() {
                 <p className="text-text-secondary text-[13px] mt-2 leading-relaxed">
                   {item.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Experience */}
-        <div className="card p-6">
+        <motion.div variants={fadeUpVariants} className="card p-6 relative overflow-hidden">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-neon/10 border border-neon/20">
               <Building2 size={20} className="text-neon" />
@@ -99,10 +123,17 @@ export default function ResumeSection() {
             </h3>
           </div>
 
-          <div className="space-y-0">
+          <motion.div variants={sequentialContainer} className="space-y-0 relative">
             {experience.map((item, index) => (
-              <div key={index} className="timeline-item">
-                <span className="text-[11px] text-neon font-medium uppercase tracking-wider">
+              <motion.div
+                key={index}
+                variants={sequentialItem}
+                className="timeline-item"
+              >
+                <span className="text-[11px] text-neon font-medium uppercase tracking-wider flex items-center gap-1.5">
+                  {index === 0 && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-neon animate-pulse inline-block" />
+                  )}
                   {item.period}
                 </span>
                 <h4 className="font-semibold text-text-primary text-[14px] mt-1">
@@ -114,17 +145,18 @@ export default function ResumeSection() {
                 <p className="text-text-secondary text-[13px] mt-2 leading-relaxed">
                   {item.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Mobile: Education only as stacked cards */}
-      <div className="md:hidden space-y-4">
+      <motion.div variants={staggerContainerVariants} className="md:hidden space-y-4">
         {education.map((item, index) => (
-          <div
+          <motion.div
             key={index}
+            variants={fadeUpVariants}
             className="card p-5 mobile-card"
           >
             <div className="flex items-start gap-4">
@@ -132,7 +164,10 @@ export default function ResumeSection() {
                 <GraduationCap size={18} className="text-neon" />
               </div>
               <div className="flex-1 min-w-0">
-                <span className="text-[11px] text-neon font-medium uppercase tracking-wider">
+                <span className="text-[11px] text-neon font-medium uppercase tracking-wider flex items-center gap-1.5">
+                  {index === 0 && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-neon animate-pulse inline-block" />
+                  )}
                   {item.period}
                 </span>
                 <h4 className="font-semibold text-text-primary text-[15px] mt-1">
@@ -146,9 +181,9 @@ export default function ResumeSection() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

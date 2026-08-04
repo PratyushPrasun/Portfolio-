@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import {
   Send,
   MapPin,
@@ -12,6 +14,15 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import {
+  fadeUpVariants,
+  staggerContainerVariants,
+  buttonHoverVariants,
+  accentLineVariants,
+  footerStagger,
+  footerItem,
+  socialIconVariants,
+} from "../../animations/variants";
 
 /* ── Toast System ── */
 interface Toast {
@@ -56,7 +67,7 @@ const socialLinks = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/pratyush-38b705351/",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -65,7 +76,7 @@ const socialLinks = [
   },
   {
     label: "Twitter",
-    href: "https://x.com",
+    href: "https://x.com/pprasun1203",
     icon: (
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -74,7 +85,7 @@ const socialLinks = [
   },
   {
     label: "Email",
-    href: "mailto:pratyush@email.com",
+    href: "mailto:ppratyush1203@gmail.com",
     icon: <MailIcon size={16} />,
   },
 ];
@@ -91,6 +102,7 @@ export default function ContactSection() {
   });
 
   const [copied, setCopied] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitState, setSubmitState] = useState<"idle" | "success" | "error">("idle");
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -105,10 +117,17 @@ export default function ContactSection() {
   }, []);
 
   const handleCopyEmail = useCallback(() => {
-    navigator.clipboard.writeText("pratyush@email.com");
+    navigator.clipboard.writeText("ppratyush1203@email.com");
     setCopied(true);
     addToast("success", "Email address copied to clipboard!");
     setTimeout(() => setCopied(false), 2500);
+  }, [addToast]);
+
+  const handleCopyPhone = useCallback(() => {
+    navigator.clipboard.writeText("+91 8210958679");
+    setCopiedPhone(true);
+    addToast("success", "Phone number copied to clipboard!");
+    setTimeout(() => setCopiedPhone(false), 2500);
   }, [addToast]);
 
   const handleChange = useCallback(
@@ -138,16 +157,53 @@ export default function ContactSection() {
       setIsSubmitting(true);
       setSubmitState("idle");
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      setIsSubmitting(false);
-      setSubmitState("success");
-      addToast("success", "Message sent successfully! I'll reply soon.");
-
-      setTimeout(() => {
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        setSubmitState("idle");
-      }, 2500);
+      try {
+        if (serviceId && templateId && publicKey) {
+          await emailjs.send(
+            serviceId,
+            templateId,
+            {
+              from_name: formData.name,
+              from_email: formData.email,
+              reply_to: formData.email,
+              name: formData.name,
+              email: formData.email,
+              subject: formData.subject || "No Subject",
+              message: formData.message,
+            },
+            publicKey
+          );
+          setIsSubmitting(false);
+          setSubmitState("success");
+          addToast("success", "Message sent successfully! I'll reply soon.");
+          setFormData({ name: "", email: "", subject: "", message: "" });
+        } else {
+          // Fallback simulation when EmailJS keys are not in .env yet
+          await new Promise((resolve) => setTimeout(resolve, 1200));
+          setIsSubmitting(false);
+          setSubmitState("success");
+          addToast(
+            "success",
+            "Message sent! (Configure NEXT_PUBLIC_EMAILJS_* keys in .env for live email delivery)"
+          );
+          setFormData({ name: "", email: "", subject: "", message: "" });
+        }
+      } catch (error: any) {
+        console.error("EmailJS submission error:", error);
+        setIsSubmitting(false);
+        setSubmitState("error");
+        const errorMessage =
+          error?.text || error?.message || "Failed to send message via EmailJS. Please try again.";
+        addToast("error", errorMessage);
+      } finally {
+        setTimeout(() => {
+          setSubmitState("idle");
+        }, 3000);
+      }
     },
     [formData, addToast]
   );
@@ -164,15 +220,25 @@ export default function ContactSection() {
   return (
     <>
       <section id="contact" className="contact-grid-bg relative pt-12">
-        <div className="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10">
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10"
+        >
           {/* Main Grid: Clean & Simple Split */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             {/* Left Side: Direct Contact Details */}
-            <div className="lg:col-span-5 space-y-6">
-              <div>
+            <motion.div variants={fadeUpVariants} className="lg:col-span-5 space-y-6">
+              <div className="relative inline-block">
                 <h2 className="text-3xl font-bold text-text-primary tracking-tight">
                   <span className="text-neon">L</span>et&apos;s Talk
                 </h2>
+                <motion.div
+                  variants={accentLineVariants}
+                  className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+                />
                 <p className="text-text-secondary text-sm mt-2 leading-relaxed">
                   Have a project in mind or want to collaborate? Send me a message and I&apos;ll get back to you as soon as possible.
                 </p>
@@ -180,14 +246,14 @@ export default function ContactSection() {
 
               {/* Direct Info List */}
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-bg-surface border border-border-card">
+                <motion.div variants={fadeUpVariants} className="flex items-center justify-between p-3.5 rounded-xl bg-bg-surface border border-border-card">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0">
                       <MailIcon size={16} className="text-neon" />
                     </div>
                     <div>
                       <p className="text-[11px] text-text-muted font-medium uppercase tracking-wider">Email</p>
-                      <p className="text-xs font-medium text-text-primary">pratyush@email.com</p>
+                      <p className="text-xs font-medium text-text-primary">ppratyush1203@email.com</p>
                     </div>
                   </div>
                   <button
@@ -198,9 +264,9 @@ export default function ContactSection() {
                   >
                     {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
                   </button>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-bg-surface border border-border-card">
+                <motion.div variants={fadeUpVariants} className="flex items-center gap-3 p-3.5 rounded-xl bg-bg-surface border border-border-card">
                   <div className="w-9 h-9 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0">
                     <MapPin size={16} className="text-neon" />
                   </div>
@@ -208,17 +274,32 @@ export default function ContactSection() {
                     <p className="text-[11px] text-text-muted font-medium uppercase tracking-wider">Location</p>
                     <p className="text-xs font-medium text-text-primary">Haldia, West Bengal, India</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-bg-surface border border-border-card">
-                  <div className="w-9 h-9 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0">
-                    <span className="w-2.5 h-2.5 rounded-full bg-neon animate-pulse" />
+                <motion.div variants={fadeUpVariants} className="flex items-center justify-between p-3.5 rounded-xl bg-bg-surface border border-border-card">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-neon/10 border border-neon/20 flex items-center justify-center shrink-0">
+                      <Phone size={16} className="text-neon" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-text-muted font-medium uppercase tracking-wider">Phone</p>
+                      <a
+                        href="tel:+918210958679"
+                        className="text-xs font-medium text-text-primary hover:text-neon transition-colors"
+                      >
+                        +91 82109 58679
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[11px] text-text-muted font-medium uppercase tracking-wider">Status</p>
-                    <p className="text-xs font-medium text-neon">Available for Freelance & Full-time</p>
-                  </div>
-                </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyPhone}
+                    className="p-2 rounded-lg text-text-muted hover:text-neon hover:bg-bg-card transition-colors"
+                    title="Copy Phone Number"
+                  >
+                    {copiedPhone ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+                  </button>
+                </motion.div>
               </div>
 
               {/* Social Icons */}
@@ -227,24 +308,31 @@ export default function ContactSection() {
                   Follow Me
                 </p>
                 <div className="flex items-center gap-2.5">
-                  {socialLinks.map((link) => (
-                    <a
+                  {socialLinks.map((link, i) => (
+                    <motion.a
                       key={link.label}
+                      custom={i}
+                      variants={socialIconVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      whileHover={{ y: -2, scale: 1.08 }}
+                      whileTap={{ scale: 0.95 }}
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-lg bg-bg-surface border border-border-card flex items-center justify-center text-text-secondary hover:text-neon hover:border-neon/40 hover:bg-neon/10 transition-all"
+                      className="w-9 h-9 rounded-lg bg-bg-surface border border-border-card flex items-center justify-center text-text-secondary hover:text-neon hover:border-neon/40 hover:bg-neon/10 transition-colors"
                       aria-label={link.label}
                     >
                       {link.icon}
-                    </a>
+                    </motion.a>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Side: Clean Form */}
-            <div className="lg:col-span-7">
+            <motion.div variants={fadeUpVariants} className="lg:col-span-7">
               <div className="card p-6 md:p-7 border border-border-card bg-bg-card rounded-2xl">
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-4" noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -303,7 +391,10 @@ export default function ContactSection() {
                     <label htmlFor="contact-message-simple">Message *</label>
                   </div>
 
-                  <button
+                  <motion.button
+                    variants={buttonHoverVariants}
+                    whileHover="hover"
+                    whileTap="tap"
                     type="submit"
                     disabled={isSubmitting}
                     className={`submit-btn ${shakeError ? "error-shake" : ""}`}
@@ -324,32 +415,38 @@ export default function ContactSection() {
                         Send Message
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </form>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* ══════════════════════════════════════════════════════
-             ONE-LINE SIMPLE FOOTER
-             ══════════════════════════════════════════════════════ */}
-          <footer className="mt-16 pt-6 pb-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-muted">
-            <p>© {new Date().getFullYear()} Pratyush. All rights reserved.</p>
+          {/* ONE-LINE SIMPLE FOOTER with sequential reveal */}
+          <motion.footer
+            variants={footerStagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-16 pt-6 pb-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-muted"
+          >
+            <motion.p variants={footerItem}>
+              © {new Date().getFullYear()} Pratyush. All rights reserved.
+            </motion.p>
 
-            <div className="flex items-center gap-6">
+            <motion.div variants={footerItem} className="flex items-center gap-6">
               <a href="#about" className="hover:text-neon transition-colors">About</a>
               <a href="#projects" className="hover:text-neon transition-colors">Projects</a>
               <a href="#contact" className="hover:text-neon transition-colors">Contact</a>
               <button
                 onClick={scrollToTop}
-                className="inline-flex items-center gap-1 hover:text-neon transition-colors font-medium ml-2"
+                className="inline-flex items-center gap-1 hover:text-neon transition-colors font-medium ml-2 cursor-pointer"
               >
                 <ArrowUp size={13} />
                 Top
               </button>
-            </div>
-          </footer>
-        </div>
+            </motion.div>
+          </motion.footer>
+        </motion.div>
       </section>
 
       <ToastContainer toasts={toasts} />

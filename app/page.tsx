@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Download, Phone } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import ProfileCard from "./components/ProfileCard";
 import MobileNavbar from "./components/MobileNavbar";
@@ -13,6 +12,11 @@ import MobileExperienceSection from "./components/sections/MobileExperienceSecti
 import ProjectsSection from "./components/sections/ProjectsSection";
 import SkillsSection from "./components/sections/SkillsSection";
 import ContactSection from "./components/sections/ContactSection";
+import CustomCursor from "./components/CustomCursor";
+import ScrollProgress from "./components/ScrollProgress";
+import BackToTop from "./components/BackToTop";
+import PageLoader from "./components/PageLoader";
+import { useMouseParallax } from "./animations/useMouseParallax";
 
 const SECTION_IDS = ["about", "services", "resume", "experience-mobile", "projects", "skills", "contact"];
 
@@ -24,6 +28,7 @@ function mapSectionToNav(sectionId: string): string {
 
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const parallaxContainerRef = useMouseParallax(4);
   const [activeSection, setActiveSection] = useState("about");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -91,8 +96,41 @@ export default function Home() {
     return () => fadeObserver.disconnect();
   }, []);
 
+  // ── Global smooth scroll for internal anchor links ──
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const anchor = target?.closest("a");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (href && href.startsWith("#") && href.length > 1) {
+        const targetId = href.substring(1);
+        const el = document.getElementById(targetId);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (targetId === "hero" || targetId === "top") {
+          e.preventDefault();
+          scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+    return () => document.removeEventListener("click", handleAnchorClick);
+  }, []);
+
   // ── Navigate to section ──
   const handleNavigate = useCallback((sectionId: string) => {
+    if (sectionId === "hero" || sectionId === "top" || sectionId === "home") {
+      const container = scrollContainerRef.current;
+      if (container) {
+        container.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
     const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -104,7 +142,19 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-bg-dark">
+    <div ref={parallaxContainerRef} className="flex h-screen overflow-hidden bg-bg-dark">
+      {/* ── Page Entrance Loader ── */}
+      <PageLoader />
+
+      {/* ── Top Scroll Progress Bar ── */}
+      <ScrollProgress targetRef={scrollContainerRef} />
+
+      {/* ── Custom Cursor (Desktop Fine Pointer Only) ── */}
+      <CustomCursor />
+
+      {/* ── Back to Top Floating Button ── */}
+      <BackToTop scrollContainerRef={scrollContainerRef} />
+
       {/* ── Left: Icon Rail Sidebar (desktop only) ── */}
       <Sidebar
         activeSection={activeSection}
@@ -126,9 +176,9 @@ export default function Home() {
       {/* ── Right: Scrollable Content Panel ── */}
       <main
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto h-screen custom-scrollbar bg-pattern"
+        className="flex-1 overflow-y-auto h-screen custom-scrollbar bg-pattern scroll-smooth"
       >
-        {/* Mobile Hero Section (replaces old fixed mobile profile card) */}
+        {/* Mobile Hero Section */}
         <MobileHeroSection />
 
         <div className="relative z-10 p-6 lg:p-8 xl:p-10 space-y-12 max-w-[900px]">

@@ -103,27 +103,31 @@ export default function MobileNavbar({
   };
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       {/* Fixed Navbar */}
       <header
-        className={`mobile-navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+        className={`mobile-navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
             ? "mobile-navbar-scrolled"
             : "bg-transparent"
-        }`}
+          }`}
         style={{
           paddingTop: "env(safe-area-inset-top, 0px)",
         }}
       >
         <div className="flex items-center justify-between px-5 h-16">
-          {/* Left: Name + Title */}
-          <div className="flex flex-col justify-center">
-            <h1 className="text-[18px] font-bold text-text-primary leading-tight tracking-tight">
-              Pratyush
-            </h1>
-            <span className="text-[11px] text-text-muted tracking-[0.12em] uppercase leading-tight">
-              Full Stack Developer
-            </span>
+          {/* Left: Logo + Name + Title */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-neon/30 bg-[#0d0d0d] flex items-center justify-center">
+              <img src="/icon.svg" alt="P Logo" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col justify-center">
+              <h1 className="text-[17px] font-bold text-text-primary leading-tight tracking-tight">
+                Pratyush
+              </h1>
+              <span className="text-[10px] tracking-[0.12em] uppercase leading-tight text-neon">
+                Full Stack Developer
+              </span>
+            </div>
           </div>
 
           {/* Right: Hamburger */}
@@ -150,18 +154,18 @@ export default function MobileNavbar({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-[60] bg-black/40"
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
               onClick={() => setIsOpen(false)}
             />
 
             {/* Drawer */}
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 z-[70] w-full max-w-[340px] mobile-drawer overflow-y-auto"
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 30, stiffness: 320 }}
+              className="fixed inset-y-0 right-0 z-[70] w-full max-w-[340px] mobile-drawer overflow-y-auto shadow-2xl"
               style={{
                 paddingTop: "env(safe-area-inset-top, 0px)",
               }}
@@ -169,7 +173,7 @@ export default function MobileNavbar({
               {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 flex items-center justify-center w-12 h-12 rounded-full text-text-muted z-10"
+                className="absolute top-4 right-4 flex items-center justify-center w-12 h-12 rounded-full text-text-muted hover:text-text-primary z-10 transition-colors"
                 style={{
                   marginTop: "env(safe-area-inset-top, 0px)",
                 }}
@@ -181,12 +185,13 @@ export default function MobileNavbar({
               <div className="flex flex-col h-full px-8 pt-8 pb-10">
                 {/* Profile Section */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15, duration: 0.4 }}
-                  className="flex flex-col items-center mb-10"
+                  transition={{ delay: 0.1, duration: 0.35 }}
+                  className="flex flex-col items-center mb-8"
                 >
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 shadow-lg"
+                  <div
+                    className="relative w-20 h-20 rounded-full overflow-hidden mb-3 shadow-md border border-border-card"
                     style={{ transform: "rotate(-2deg)" }}
                   >
                     <Image
@@ -194,11 +199,11 @@ export default function MobileNavbar({
                       alt="Pratyush"
                       fill
                       className="object-cover object-top grayscale"
-                      sizes="96px"
+                      sizes="80px"
                     />
                   </div>
-                  <h2 className="text-lg font-bold text-text-primary">Pratyush</h2>
-                  <p className="text-[12px] text-text-muted tracking-[0.1em] uppercase">
+                  <h2 className="text-base font-bold text-text-primary">Pratyush</h2>
+                  <p className="text-[11px] text-text-muted tracking-[0.1em] uppercase mt-0.5">
                     Full Stack Developer
                   </p>
                 </motion.div>
@@ -211,23 +216,26 @@ export default function MobileNavbar({
                       return (
                         <motion.li
                           key={item.id}
-                          initial={{ opacity: 0, x: 20 }}
+                          initial={{ opacity: 0, x: 25 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{
-                            delay: 0.2 + index * 0.05,
+                            delay: 0.15 + index * 0.04,
                             duration: 0.3,
+                            ease: [0.25, 0.1, 0.25, 1.0],
                           }}
                         >
                           <button
                             onClick={() => handleNavClick(item.id)}
-                            className={`mobile-drawer-link w-full text-left flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                              isActive
-                                ? "text-neon bg-neon/10"
-                                : "text-text-secondary"
-                            }`}
+                            className={`mobile-drawer-link w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium transition-all ${isActive
+                                ? "text-neon bg-neon/10 font-semibold"
+                                : "text-text-secondary hover:text-text-primary hover:bg-white/5"
+                              }`}
                           >
                             {isActive && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-neon shrink-0" />
+                              <motion.span
+                                layoutId="activeMobileNavDot"
+                                className="w-1.5 h-1.5 rounded-full bg-neon shrink-0"
+                              />
                             )}
                             {item.label}
                           </button>
@@ -239,34 +247,35 @@ export default function MobileNavbar({
 
                 {/* Bottom Section */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                  className="mt-8 space-y-5"
+                  transition={{ delay: 0.4, duration: 0.35 }}
+                  className="mt-6 space-y-4 pt-4 border-t border-border-subtle"
                 >
                   {/* Resume Button */}
                   <a
-                    href="#"
-                    className="flex items-center justify-center gap-2 w-full py-3.5 text-[13px] font-semibold uppercase tracking-wider rounded-xl bg-neon text-black transition-all"
+                    href="/Pratyush.pdf"
+                    download="Pratyush.pdf"
+                    className="flex items-center justify-center gap-2 w-full py-3 text-[12px] font-semibold uppercase tracking-wider rounded-xl bg-neon text-black transition-all shadow-md active:scale-[0.98]"
                   >
-                    <Download size={16} />
+                    <Download size={15} />
                     Download Resume
                   </a>
 
                   {/* Theme Toggle + Social */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+                  <div className="flex items-center justify-between pt-2">
                     {/* Theme Toggle */}
                     <button
                       onClick={toggleTheme}
-                      className="flex items-center gap-2 text-[12px] text-text-muted"
+                      className="flex items-center gap-2 text-[12px] text-text-muted hover:text-neon transition-colors"
                       aria-label="Toggle theme"
                     >
                       {theme === "dark" ? (
-                        <Sun size={18} />
+                        <Sun size={17} />
                       ) : (
-                        <Moon size={18} />
+                        <Moon size={17} />
                       )}
-                      <span className="uppercase tracking-wider">
+                      <span className="uppercase tracking-wider font-medium">
                         {theme === "dark" ? "Light" : "Dark"}
                       </span>
                     </button>
@@ -277,7 +286,7 @@ export default function MobileNavbar({
                         <a
                           key={link.label}
                           href={link.href}
-                          className="text-text-muted transition-colors"
+                          className="text-text-muted hover:text-neon transition-colors"
                           aria-label={link.label}
                           target="_blank"
                           rel="noopener noreferrer"
