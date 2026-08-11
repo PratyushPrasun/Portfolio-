@@ -15,6 +15,7 @@ import ContactSection from "./components/sections/ContactSection";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgress from "./components/ScrollProgress";
 import BackToTop from "./components/BackToTop";
+import ChatBot from "./components/ChatBot";
 import PageLoader from "./components/PageLoader";
 import { useMouseParallax } from "./animations/useMouseParallax";
 
@@ -154,6 +155,9 @@ export default function Home() {
 
       {/* ── Back to Top Floating Button ── */}
       <BackToTop scrollContainerRef={scrollContainerRef} />
+
+      {/* ── AI Chat Assistant ── */}
+      <ChatBot />
 
       {/* ── Left: Icon Rail Sidebar (desktop only) ── */}
       <Sidebar

@@ -47,7 +47,7 @@ export default function BackToTop({ scrollContainerRef }: BackToTopProps) {
           onClick={scrollToTop}
           aria-label="Back to top"
           title="Back to top"
-          className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-full bg-bg-card/90 backdrop-blur-md border border-border-card text-text-muted hover:text-neon hover:border-neon/40 shadow-lg shadow-black/40 transition-colors cursor-pointer"
+          className="fixed bottom-22 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-full bg-bg-card/90 backdrop-blur-md border border-border-card text-text-muted hover:text-neon hover:border-neon/40 shadow-lg shadow-black/40 transition-colors cursor-pointer"
         >
           <ArrowUp size={18} strokeWidth={2} />
         </motion.button>
