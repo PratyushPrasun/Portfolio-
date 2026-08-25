@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Building2 } from "lucide-react";
-import { fadeUpVariants, staggerContainerVariants } from "../../animations/variants";
+import { fadeUpVariants, staggerContainerVariants, accentLineVariants } from "../../animations/variants";
 import { experienceData as experience } from "../../data/experienceData";
 
 export default function MobileExperienceSection() {
@@ -15,13 +15,19 @@ export default function MobileExperienceSection() {
       viewport={{ once: true, margin: "-100px" }}
       className="section-animate lg:hidden"
     >
-      <motion.h2
-        variants={fadeUpVariants}
-        className="text-2xl font-bold mb-6 flex items-center text-text-primary tracking-wide"
-      >
-        <span className="text-[#22c55e]">E</span>
-        <span>xperience</span>
-      </motion.h2>
+      <div className="relative mb-6 inline-block">
+        <motion.h2
+          variants={fadeUpVariants}
+          className="text-2xl font-bold flex items-center text-text-primary tracking-wide"
+        >
+          <span className="text-[#22c55e]">E</span>
+          <span>xperience</span>
+        </motion.h2>
+        <motion.div
+          variants={accentLineVariants}
+          className="h-[2px] bg-gradient-to-r from-[#22c55e] to-transparent mt-1.5 rounded-full"
+        />
+      </div>
 
       <motion.div variants={fadeUpVariants} className="card p-6 relative overflow-hidden">
         <div className="flex items-center gap-3 mb-6">
