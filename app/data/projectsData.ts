@@ -31,6 +31,26 @@ export const projects: Project[] = [
     liveDemo: "http://13.251.249.145/",
   },
   {
+    id: "DocuMind",
+    title: "DocuMind",
+    image: "/documind.png",
+    mockupGradient: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+    techStack: [
+      "React.js",
+      "Express.js",
+      "ChromaDB",
+      "Voyage AI",
+      "LangChain",
+    ],
+    keyFeatures: [
+      "Document intelligence platform for asking questions about uploaded PDFs.",
+      "RAG-based Q&A using Gemini, ChromaDB, Voyage AI, and LangChain for grounded responses.",
+      "Source citations & secure authentication to provide reliable answers with traceable document reference.",
+    ],
+    github: "https://github.com/PratyushPrasun/DocuMind",
+    liveDemo: "https://docu-mind-two-rouge.vercel.app/",
+  },
+  {
     id: "Vyuha ",
     title: "Vyuha ",
     image: "./vyuha.png",
@@ -44,8 +64,8 @@ export const projects: Project[] = [
     ],
     keyFeatures: [
       "AI-powered idea-to-execution platform built with Next.js.",
-"Interactive workflows for idea expansion and flowchart visualization.",
-"GitHub project initialization with a modern, responsive interface."
+      "Interactive workflows for idea expansion and flowchart visualization.",
+      "GitHub project initialization with a modern, responsive interface."
 
     ],
     github: "https://github.com/PratyushPrasun/Vyuha-web",
@@ -90,43 +110,23 @@ export const projects: Project[] = [
     liveDemo: "https://ai-resume-pro-inky.vercel.app/",
   },
   {
-    id: "Pitch hub",
-    title: "Pitch Hub",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
+    id: "GOT",
+    title: "Game of Thrones",
+    image: "/got.png",
     mockupGradient: "linear-gradient(135deg, #0a1628, #1a2744, #0d3b66)",
     techStack: [
-      "Next.js",
-      "Typescript",
-      "Auth.js",
-      "Tailwind CSS",
-    ],
-    keyFeatures: [
-      "Full-stack startup blogging platform for publishing and discovering business ideas.",
-      "Secure authentication for creators and readers.",
-      "Built with Next.js & Tailwind CSS for a fast, modern web experience.",
-    ],
-    github: "https://github.com/PratyushPrasun/Yc_directory",
-    liveDemo: "https://yc-directory-omega-sable.vercel.app/",
-  },
-  {
-    id: "Redefine",
-    title: "ReDefine",
-    image: "/red.png",
-    mockupGradient: "linear-gradient(135deg, #0a1628, #1a2744, #0d3b66)",
-    techStack: [
-      "Java",
-      "Spring Boot",
-      "MongoDB",
-      "GraphQL",
-      "Kafka",
-      "Redis",
+      "JavaScript",
+      "HTML Canvas",
+      "GSAP",
+      "Lenis",
+      "Scroll Trigger"
     ],
     keyFeatures: [
       "Animation-driven web experience powered by GSAP and modern motion design.",
-"Scroll-triggered interactions with immersive micro-animations.",
-"Performance-optimized UI delivering smooth, fluid user experiences."
+      "Scroll-triggered interactions with immersive micro-animations.",
+      "Performance-optimized UI delivering smooth, fluid user experiences."
     ],
-    github: "https://github.com/PratyushPrasun/ReDefine",
-    liveDemo: "https://re-define-phi.vercel.app/",
+    github: "https://github.com/PratyushPrasun/GameOfThrones",
+    liveDemo: "https://game-of-thrones-eight.vercel.app/",
   },
 ];
