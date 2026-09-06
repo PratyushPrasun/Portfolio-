@@ -23,12 +23,12 @@ export const projects: Project[] = [
       "Redis",
     ],
     keyFeatures: [
-      "Full-stack online retail platform with admin portal, order management, and AWS deployment.",
+      "Full-stack online retail platform with a dedicated admin portal, complete order management, and inventory control.",
       "High-performance architecture powered by Redis caching, rate limiting, and optimized queries.",
       "Secure commerce with Razorpay payments, RBAC, order tracking, and automated invoices.",
     ],
     github: "https://github.com/PratyushPrasun/Zyvora",
-    liveDemo: "http://13.251.249.145/",
+    liveDemo: "https://zyvora-nu.vercel.app/",
   },
   {
     id: "DocuMind",
